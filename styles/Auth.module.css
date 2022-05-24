@@ -1,0 +1,76 @@
+.jumbotron{
+    display: flex;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background-color: #F6F7F8;
+}
+.formText{
+    width: 450px;
+    margin-bottom: 30px;
+}
+.formInput{
+    width: 450px;
+    height: 70px;
+    margin-top: 5px;
+}
+.title{
+    color: #9EA0A5;
+}
+.input{
+    width: 450px;
+    height: 40px;
+    margin-top: 5px;
+    border: 1px solid #E2E5ED;
+    border-radius: 2px;
+}
+.button{
+    margin-top: 30px;
+    background-color: #FBB017;
+    color: #FFFFFF;
+    width: 450px;
+    height: 40px;
+    border-style: none;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+.button:hover{
+    outline-style: none;
+}
+.forgot{
+    margin-top: 5px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    text-decoration: none;
+    color: #000000;
+    width: 450px;
+    margin-bottom: -5px;
+}
+.link{
+    text-decoration: none;
+    color: #FBB017;
+}
+.formPassword{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.password{
+    background-image: url("../public/pass.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: white;
+    margin-left: -40px;
+    width: 30px;
+    height: 25px;
+    border: none;
+}
+.password:focus{
+    outline-style: none;
+}

@@ -1,0 +1,30 @@
+.button1{
+    background-color: white;
+    color: #5E50A1;
+    font-weight: bold;
+    width: 10%;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid #5E50A1;
+    margin-right: 10px;
+}
+.button2{
+    background-color: #5E50A1;
+    color: white;
+    font-weight: bold;
+    width: 10%;
+    height: 40px;
+    border-radius: 6px;
+    border: none;
+}
+.formUser{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.photo{
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

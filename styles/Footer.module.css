@@ -1,0 +1,43 @@
+.container {
+    padding: 0 6rem;
+    background-color: #5E50A1;
+    height: 50vh;
+    width: 100%;
+}
+.content{
+    margin-top: 30px;
+    color: white;
+    width: 500px;
+    font-size: x-large;
+    margin-bottom: 30px;
+}
+.image{
+    padding: 10px;
+}
+.line{
+      border: 1px solid white;
+      height: 0px;
+      background-color: white;
+}
+.bottom{
+    display: flex;
+    color: white;
+    font-size: large;
+    margin-top: 30px;
+    width: 100%;
+    justify-content: center;
+}
+.cover{
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+}
+.cover2{
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+.phone{
+    margin-right: 40px;
+}
+  
