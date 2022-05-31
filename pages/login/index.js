@@ -4,6 +4,7 @@ import style from "../../styles/Auth.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function Register() {
   const router = useRouter();
@@ -17,10 +18,7 @@ export default function Register() {
     axios
       .post(`${process.env.HOST}/login`, form)
       .then((response) => {
-        if (response.data.data === null) {
-          return alert("email or password is wrong");
-        }
-
+        Swal.fire(response.data.message, "", "success");
         document.cookie = `token=${response.data.data.token};path=/`;
         document.cookie = `users=${JSON.stringify(
           response.data.data.id
@@ -29,14 +27,14 @@ export default function Register() {
         return;
       })
       .catch((err) => {
-        alert(err);
+        Swal.fire(err.response.data.message, err.response.data.error, "error");
       });
-  };
+  }; 
   return (
     <>
       <div className={style.jumbotron}>
-        <Background />
-        <div className={style.content}>
+        <Background className={style.background} />
+        <div className={style.content} style={{ height: "100vh" }}>
           <div className={style.formText}>
             <h1>Halo, Pewpeople</h1>
             <h6>

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../../styles/Profile.module.css";
+import styles from "../../../styles/WorkerProfile.module.css";
 import {
   Nav,
   NavItem,
@@ -16,12 +16,12 @@ import dateFormat, { masks } from "dateformat";
 
 export async function getServerSideProps(context) {
   const token = context.req.cookies.token;
-  const user = context.req.cookies.users;
+  const { id } = context.params;
   const api1 = async () => {
     try {
       const res = await axios({
         method: "get",
-        url: `${process.env.HOST}/user/${user}`,
+        url: `${process.env.HOST}/worker/${id}`,
         headers: { token: token },
       });
       return {
@@ -63,7 +63,9 @@ function Profile(props) {
             <div className={styles.profile}>
               <div className={styles.image}>
                 <Image
-                  src={`${host}/${data1.user.photo}`}
+                  src={`${process.env.HOST}/${
+                    data1.user.photo ? data1.user.photo : "profile.jpg"
+                  }`}
                   style={{ borderRadius: "50%" }}
                   width={200}
                   height={200}
@@ -74,10 +76,14 @@ function Profile(props) {
 
               <h1 className={styles.name}>{data1.user.name}</h1>
               <h3 className={styles.job}>{data1.user.job_desk}</h3>
-              <div className={styles.formLocation}>
-                <div className={styles.location}></div>
-                <p className={styles.desc}>{data1.user.residence}</p>
-              </div>
+              {data1.user.residence ? (
+                <div className={styles.formLocation}>
+                  <div className={styles.location}></div>
+                  <p>{data1.user.residence}</p>
+                </div>
+              ) : (
+                <></>
+              )}
               <div className={styles.desc}>{data1.user.job_desk}</div>
               <div className={styles.desc}>{data1.user.description}</div>
               <button className={styles.button}>Hire</button>
@@ -94,12 +100,38 @@ function Profile(props) {
                     })}
                 </Row>
               </div>
-              {/* <ul className={styles.socialMedia}>
-                <li className={styles.formLocation}>
-                <div className={styles.location}></div>
-                <p className={styles.desc}>{data1.user.residence}</p>
-                </li>
-              </ul> */}
+              {data1.user.email ? (
+                <div className={styles.formLocation}>
+                  <div className={styles.email}></div>
+                  <p>{data1.user.email}</p>
+                </div>
+              ) : (
+                <></>
+              )}
+              {data1.user.instagram ? (
+                <div className={styles.formLocation}>
+                  <div className={styles.instagram}></div>
+                  <p>{data1.user.instagram}</p>
+                </div>
+              ) : (
+                <></>
+              )}
+              {data1.user.github ? (
+                <div className={styles.formLocation}>
+                  <div className={styles.github}></div>
+                  <p>{data1.user.github}</p>
+                </div>
+              ) : (
+                <></>
+              )}
+              {data1.user.twitter ? (
+                <div className={styles.formLocation}>
+                  <div className={styles.gitlab}></div>
+                  <p>{data1.user.twitter}</p>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
             <div className={styles.content}>
               <Nav tabs>
@@ -131,7 +163,7 @@ function Profile(props) {
                           <Col className={styles.cardPorto} key={item.id}>
                             <div className={styles.porto}>
                               <Image
-                                src={`${host}/${item.photo}`}
+                                src={`${host}/${item.photo ? item.photo : "profile.jpg"}`}
                                 width={219}
                                 height={148}
                                 layout="fixed"
@@ -153,7 +185,7 @@ function Profile(props) {
                             <div className={styles.cardExp} key={item.id}>
                               <div className={styles.expImg}>
                                 <Image
-                                  src={`${host}/${item.photo}`}
+                                  src={`${host}/${item.photo ? item.photo : "profile.jpg"}`}
                                   width={148}
                                   height={148}
                                   layout="fixed"

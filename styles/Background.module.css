@@ -1,6 +1,7 @@
 .ianBackground{
     height: 100vh;
     width: 100%;
+    position: fixed;
 }
 .image{
     z-index: -2;
@@ -45,4 +46,9 @@
 }
 .jumbotron{
     height:90vh;
+}
+@media screen and (max-width: 550px){
+    .ianBackground{
+        display: none;
+    }
 }

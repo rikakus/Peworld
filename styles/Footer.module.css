@@ -40,4 +40,9 @@
 .phone{
     margin-right: 40px;
 }
+@media screen and (max-width: 550px){
+    .content{
+        width: 100%;
+    }
+}
   

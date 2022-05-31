@@ -1,13 +1,20 @@
 .jumbotron{
     display: flex;
+    width: 100%;
+}
+.background{
+    height: 100vh;
 }
 .content{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 50%;
     background-color: #F6F7F8;
+    position: absolute;
+    right: 0;
+    height: 140vh;
 }
 .formText{
     width: 450px;
@@ -16,7 +23,7 @@
 .formInput{
     width: 450px;
     height: 70px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 .title{
     color: #9EA0A5;
@@ -27,6 +34,7 @@
     margin-top: 5px;
     border: 1px solid #E2E5ED;
     border-radius: 2px;
+    padding-left: 10px;
 }
 .button{
     margin-top: 30px;
@@ -73,4 +81,9 @@
 }
 .password:focus{
     outline-style: none;
+}
+@media screen and (max-width: 550px){
+    .content{
+        width: 100%;
+    }
 }

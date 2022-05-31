@@ -1,13 +1,50 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import style from "../styles/Navbar.module.css";
 import { useRouter } from "next/router";
 import axios from "axios";
+import {
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
+import { removeCookies } from "cookies-next";
 
-
-export default function Navbar() {
+export default function Navbar(props) {
   const router = useRouter();
-  const token = null
+  const { token } = props;
+  const [data, setData] = useState(" ");
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const getData = async () => {
+      await axios
+        .get(`${process.env.HOST}/photo`, {
+          headers: { token },
+        })
+        .then((response) => {
+          setData(response.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    if (token) {
+      getData();
+    }
+    setIsLoading(false);
+  }, [token]);
+
+  const level = data.level == 1 ? "worker" : "recruiter";
+
+  const logout = () => {
+    removeCookies("token");
+    removeCookies("users");
+    return router.push("/login");
+  };
 
   return (
     <>
@@ -32,17 +69,22 @@ export default function Navbar() {
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
         <div
-          className="collapse navbar-collapse"
+          className={`${!isOpen ? "collapse" : ""} navbar-collapse`}
           style={{ justifyContent: "flex-end" }}
           id="navbarSupportedContent"
         >
-          {!token && token === null ? (
-            <>
+          {isLoading ? (
+            <></>
+          ) : !token ? (
+            <div className={style.formButtton}>
               <button
                 className={style.button1}
                 onClick={() => {
@@ -59,22 +101,42 @@ export default function Navbar() {
               >
                 Daftar
               </button>
-            </>
+            </div>
           ) : (
             <div className={style.formUser}>
-              <div className=""></div>
-              <div className=""></div>
-              <div className={style.photo}>
-                {" "}
-                <Image
-                  src={`${process.env.HOST}/a1829ae4-bccb-47ff-a42e-8672f5554ff4`}
-                  style={{ borderRadius: "50%" }}
-                  width={30}
-                  height={30}
-                  layout="fixed"
-                  alt="gambar"
-                ></Image>
-              </div>
+              <div className={style.notification}></div>
+              <div className={style.message}></div>
+              <UncontrolledDropdown>
+                <DropdownToggle nav>
+                  <div className={style.photo}>
+                    <Image
+                      src={`${process.env.HOST}/${data.photo ? data.photo : "profile.jpg"}`}
+                      style={{ borderRadius: "50%" }}
+                      width={40}
+                      height={40}
+                      layout="fixed"
+                      alt="gambar"
+                    ></Image>
+                  </div>
+                </DropdownToggle>
+                <DropdownMenu end>
+                  <DropdownItem
+                    onClick={() => {
+                      router.push(`/profile/${level}`);
+                    }}
+                  >
+                    Profile
+                  </DropdownItem>
+                  <hr/>
+                  <DropdownItem
+                    onClick={() => {
+                      logout();
+                    }}
+                  >
+                    log out
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
             </div>
           )}
         </div>

@@ -17,13 +17,13 @@
   margin-top: 40px;
   margin-bottom: 40px;
   height: 50px;
-  
 }
 .input{
-  width: 90%;
+  width: 85%;
   border-radius: 6px;
   border: 1px solid #E5E5E5;
   height: 50px;
+  margin-right: 10px;
 }
 .button{
   width: 10%;
@@ -32,6 +32,7 @@
   background-color: #5E50A1;
   color: white;
   height: 50px;
+  margin-bottom: 10px;
 }
 .card{
   display: flex;
@@ -78,4 +79,24 @@
   padding: 5px;
   font-size: large;
   text-align: center;
+}
+@media screen and (max-width: 550px){
+  .input{
+    width: 60%;
+  }
+  .button{
+    width: 100px;
+  }
+  .card{
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+  .image{
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
 }

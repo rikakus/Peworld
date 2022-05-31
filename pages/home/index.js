@@ -4,13 +4,14 @@ import axios from "axios";
 import Image from "next/image";
 import { Row, Col } from "reactstrap";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 export async function getServerSideProps(context) {
   const api1 = async () => {
     try {
       const res = await axios({
         method: "get",
-        url: `${process.env.HOST}/user`,
+        url: `${process.env.HOST}/worker?page=1&limit=100`,
       });
       return {
         data: res.data,
@@ -38,12 +39,12 @@ function HomePages(props) {
 
   const getContent = async () => {
     await axios
-      .get(`${process.env.HOST}/user?search=${key}`)
+      .get(`${process.env.HOST}/worker?search=${key}&page=1&limit=100`)
       .then((response) => {
         setData(response.data.data);
       })
       .catch((err) => {
-        alert(err);
+        Swal.fire(err.response.data.message, err.response.data.error, "error");
       });
   };
 
@@ -53,6 +54,7 @@ function HomePages(props) {
       getContent();
     }
   };
+  
   const handleButton = () => {
     router.push(`/home?search=${key}`);
     return getContent();
@@ -86,13 +88,17 @@ function HomePages(props) {
             </button>
           </div>
 
-          {data1 &&
+          {data1.length == 0 ? (
+            <h1>Data Not Found</h1>
+          ) : (
             data1.map((item) => {
               return (
-                <div className={style.card}>
+                <div className={style.card} key={item.id}>
                   <div className={style.image}>
                     <Image
-                      src={`${process.env.HOST}/${item.photo}`}
+                      src={`${process.env.HOST}/${
+                        item.photo ? item.photo : "profile.jpg"
+                      }`}
                       style={{ borderRadius: "50%" }}
                       width={200}
                       height={200}
@@ -104,10 +110,15 @@ function HomePages(props) {
                   <div className={style.detail}>
                     <h1>{item.name}</h1>
                     <p>{item.job_desk}</p>
-                    <div className={style.formLocation}>
-                      <div className={style.location}></div>
-                      <p>{item.residence}</p>
-                    </div>
+                    {item.residence ? (
+                      <div className={style.formLocation}>
+                        <div className={style.location}></div>
+                        <p>{item.residence}</p>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+
                     <Row style={{ margin: "10px", maxWidth: "300px" }}>
                       {item.skill &&
                         item.skill.map((item) => {
@@ -122,14 +133,15 @@ function HomePages(props) {
                   <button
                     className={style.button}
                     onClick={() => {
-                      router.push(`/profile/${item.id}`);
+                      router.push(`/profile/${item.login_id}`);
                     }}
                   >
                     View Profile
                   </button>
                 </div>
               );
-            })}
+            })
+          )}
         </div>
       </section>
     </>
