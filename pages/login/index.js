@@ -18,6 +18,7 @@ export default function Register() {
     axios
       .post(`${process.env.HOST}/login`, form)
       .then((response) => {
+        console.log(response);
         Swal.fire(response.data.message, "", "success");
         document.cookie = `token=${response.data.data.token};path=/`;
         document.cookie = `users=${JSON.stringify(
@@ -29,7 +30,7 @@ export default function Register() {
       .catch((err) => {
         Swal.fire(err.response.data.message, err.response.data.error, "error");
       });
-  }; 
+  };
   return (
     <>
       <div className={style.jumbotron}>

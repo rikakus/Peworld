@@ -12,8 +12,9 @@ import {
 } from "reactstrap";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import dateFormat, { masks } from "dateformat";
+import dateFormat from "dateformat";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 export async function getServerSideProps(context) {
   const token = context.req.cookies.token;
@@ -38,7 +39,7 @@ export async function getServerSideProps(context) {
   };
   return {
     props: {
-      data: [],
+      data: token,
       api1: await api1(),
     },
   };
@@ -47,8 +48,102 @@ export async function getServerSideProps(context) {
 function Profile(props) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("1");
-  const data1 = props.api1.data.data;
+  const [data1, setData] = useState(props.api1.data.data);
+
+  console.log(data1);
   const host = process.env.HOST;
+
+  const getData = async () => {
+    const token = props.data;
+    await axios
+      .get(`${process.env.HOST}/worker/${data1.user.login_id}`, {
+        headers: { token },
+      })
+      .then((response) => {
+        setData(response.data.data);
+      })
+      .catch((err) => {
+        Swal.fire(err.response.data.message, err.response.data.error, "error");
+      });
+  };
+
+  const handleDeleteExp = async (id) => {
+    Swal.fire({
+      title: "Apakah kamu yakin?",
+      text: "Pengalaman Kerja tidak dapat dikembalikan",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#5E50A1",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ya, hapus!",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`${process.env.HOST}/experience/${id}`)
+          .then((response) => {
+            Swal.fire(
+              response.data.message,
+              "Pengalaman Kerja Berhasil Terhapus",
+              "success"
+            );
+            return getData();
+          })
+          .catch((err) => {
+            Swal.fire(
+              err.response.data.message,
+              err.response.data.error,
+              "error"
+            );
+          });
+      }
+    });
+  };
+
+  const handleDeletePortofolio = async (id) => {
+    Swal.fire({
+      title: "Apakah kamu yakin?",
+      text: "Portofolio tidak dapat dikembalikan",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#5E50A1",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "ya, hapus!",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`${process.env.HOST}/Portofolio/${id}`)
+          .then((response) => {
+            Swal.fire(
+              response.data.message,
+              "Portofolio Berhasil Terhapus",
+              "success"
+            );
+            return getData();
+          })
+          .catch((err) => {
+            Swal.fire(
+              err.response.data.message,
+              err.response.data.error,
+              "error"
+            );
+          });
+      }
+    });
+  };
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  },[]);
+
+  const height =
+    width > 550
+      ? 1300
+      : 1300 +
+        (activeTab == "1"
+          ? data1.portofolio.length * 180
+          : data1.experience.length * 300);
 
   return (
     <>
@@ -58,7 +153,7 @@ function Profile(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="hero" style={{ height: "200vh" }}>
+      <div className="hero" style={{ height: `${height}px` }}>
         <div className={styles.background}>
           <div className={styles.container}>
             <div className={styles.profile}>
@@ -140,21 +235,29 @@ function Profile(props) {
               )}
             </div>
             <div className={styles.content}>
-              <Nav tabs>
+              <Nav>
                 <NavItem>
                   <NavLink
-                    className={activeTab == "1" ? "active" : ""}
+                    className={styles.navTab}
                     onClick={() => setActiveTab("1")}
-                    style={{ marginLeft: "100px" }}
+                    style={
+                      activeTab == "1"
+                        ? { borderBottom: "4px solid #5e50a1" }
+                        : {}
+                    }
                   >
                     portofolio
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    className={activeTab == "2" ? "active" : ""}
+                    className={styles.navTab}
                     onClick={() => setActiveTab("2")}
-                    style={{ marginLeft: "100px" }}
+                    style={
+                      activeTab == "2"
+                        ? { borderBottom: "4px solid #5e50a1" }
+                        : {}
+                    }
                   >
                     pengalaman kerja
                   </NavLink>
@@ -163,7 +266,7 @@ function Profile(props) {
               <TabContent activeTab={activeTab}>
                 <TabPane tabId="1">
                   <Row style={{ margin: "20px" }}>
-                    {data1 &&
+                    {data1 && data1 ? (
                       data1.portofolio.map((item) => {
                         return (
                           <Col className={styles.cardPorto} key={item.id}>
@@ -179,9 +282,24 @@ function Profile(props) {
                               ></Image>
                             </div>
                             <div className={styles.namePorto}>{item.name}</div>
+                            <button
+                              style={{
+                                margin: "10px",
+                                border: "1px solid red",
+                                color: "red",
+                                borderRadius: "10px",
+                                backgroundColor: "transparent",
+                              }}
+                              onClick={() => handleDeletePortofolio(item.id)}
+                            >
+                              delete
+                            </button>
                           </Col>
                         );
-                      })}
+                      })
+                    ) : (
+                      <Col className={styles.cardPorto}>Data Not Found</Col>
+                    )}
                   </Row>
                 </TabPane>
                 <TabPane tabId="2">
@@ -217,6 +335,18 @@ function Profile(props) {
                                   {item.description}
                                 </div>
                               </div>
+                              <button
+                                style={{
+                                  margin: "10px",
+                                  border: "1px solid red",
+                                  color: "red",
+                                  borderRadius: "10px",
+                                  backgroundColor: "transparent",
+                                }}
+                                onClick={() => handleDeleteExp(item.id)}
+                              >
+                                delete
+                              </button>
                             </div>
                           </>
                         );

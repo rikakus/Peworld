@@ -48,7 +48,7 @@ export default function Navbar(props) {
 
   return (
     <>
-      <nav className="container navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="container navbar ">
         <a className="navbar-brand" href="/">
           <div className="rm-5">
             <Image
@@ -61,7 +61,7 @@ export default function Navbar(props) {
           </div>
         </a>
 
-        <button
+        {/* <button
           className="navbar-toggler"
           type="button"
           data-toggle="collapse"
@@ -74,10 +74,10 @@ export default function Navbar(props) {
           }}
         >
           <span className="navbar-toggler-icon"></span>
-        </button>
+        </button> */}
 
         <div
-          className={`${!isOpen ? "collapse" : ""} navbar-collapse`}
+          className={` navbar`}
           style={{ justifyContent: "flex-end" }}
           id="navbarSupportedContent"
         >
@@ -110,7 +110,9 @@ export default function Navbar(props) {
                 <DropdownToggle nav>
                   <div className={style.photo}>
                     <Image
-                      src={`${process.env.HOST}/${data.photo ? data.photo : "profile.jpg"}`}
+                      src={`${process.env.HOST}/${
+                        data.photo ? data.photo : "profile.jpg"
+                      }`}
                       style={{ borderRadius: "50%" }}
                       width={40}
                       height={40}
@@ -127,7 +129,7 @@ export default function Navbar(props) {
                   >
                     Profile
                   </DropdownItem>
-                  <hr/>
+                  <hr />
                   <DropdownItem
                     onClick={() => {
                       logout();

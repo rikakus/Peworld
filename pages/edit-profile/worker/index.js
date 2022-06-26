@@ -290,7 +290,16 @@ function EditProfile(props) {
     })
   };
 
-  const height = 2347 + form.exp.length * 600 + form.porto.length * 600;
+    const [width, setWidth] = useState(0);
+    useEffect(() => {
+      setWidth(window.innerWidth);
+    }, []);
+
+    const height =
+      width > 550
+        ? 2347 + form.exp.length * 700 + form.porto.length * 700
+        : 2347 + form.exp.length * 830 + form.porto.length * 830 
+
 
   return (
     <>
@@ -474,25 +483,31 @@ function EditProfile(props) {
                         <div className={styles.formInput} key={item.id}>
                           <div className={styles.title}>Posisi</div>
                           <input
+                            disabled
                             type="text"
                             className={styles.input}
                             placeholder="  web developer"
                             value={item.position}
                           />
                         </div>
-                        <div className={styles.skill}>
-                          <div className={styles.formInput}>
-                            <div className={styles.title}>Nama Perusahaan</div>
-                            <input
-                              type="text"
-                              className={styles.input}
-                              placeholder="  PT Harus Bisa"
-                              value={item.company_name}
-                            />
-                          </div>
+                        <div className={styles.formInput}>
+                          <div className={styles.title}>Nama Perusahaan</div>
+                          <input
+                            disabled
+                            type="text"
+                            className={styles.input}
+                            placeholder="  PT Harus Bisa"
+                            value={item.company_name}
+                          />
+                        </div>
+                        <div
+                          className={styles.formInput}
+                          style={{ display: "flex" }}
+                        >
                           <div>
                             <div className={styles.title}>Tanggal Masuk</div>
                             <DatePicker
+                              disabled
                               value={dateFormat(
                                 item.date_join,
                                 "paddedShortDate"
@@ -500,8 +515,11 @@ function EditProfile(props) {
                               className={styles.inputDate}
                               selected={startDate}
                             />
+                          </div>
+                          <div>
                             <div className={styles.title}>Tanggal Keluar</div>
                             <DatePicker
+                              disabled
                               value={dateFormat(
                                 item.date_out,
                                 "paddedShortDate"
@@ -519,6 +537,7 @@ function EditProfile(props) {
                         <div className={styles.formInputDesc}>
                           <div className={styles.title}>Deskripsi Singkat</div>
                           <textarea
+                            disabled
                             type="text"
                             className={styles.inputDesc}
                             placeholder="  Deskripsikan pekerjaan anda"
@@ -528,6 +547,12 @@ function EditProfile(props) {
                         <button
                           className={styles.button5}
                           onClick={() => handleDeleteExp(item.id)}
+                          style={{
+                            border: "1px solid red",
+                            color: "red",
+                            borderRadius: "10px",
+                            backgroundColor: "transparent",
+                          }}
                         >
                           Hapus Pengalaman Kerja
                         </button>
@@ -548,19 +573,19 @@ function EditProfile(props) {
                     }
                   />
                 </div>
-                <div className={styles.skill}>
-                  <div className={styles.formInput}>
-                    <div className={styles.title}>Nama Perusahaan</div>
-                    <input
-                      type="text"
-                      className={styles.input}
-                      placeholder="  PT Harus Bisa"
-                      value={exp.companyName}
-                      onChange={(e) =>
-                        setExp({ ...exp, companyName: e.target.value })
-                      }
-                    />
-                  </div>
+                <div className={styles.formInput}>
+                  <div className={styles.title}>Nama Perusahaan</div>
+                  <input
+                    type="text"
+                    className={styles.input}
+                    placeholder="  PT Harus Bisa"
+                    value={exp.companyName}
+                    onChange={(e) =>
+                      setExp({ ...exp, companyName: e.target.value })
+                    }
+                  />
+                </div>
+                <div className={styles.formInput} style={{ display: "flex" }}>
                   <div>
                     <div className={styles.title}>Tanggal Masuk</div>
                     <DatePicker
@@ -573,6 +598,8 @@ function EditProfile(props) {
                         })
                       }
                     />
+                  </div>
+                  <div>
                     <div className={styles.title}>Tanggal Keluar</div>
                     <DatePicker
                       className={styles.inputDate}
@@ -616,6 +643,7 @@ function EditProfile(props) {
                         <div className={styles.formInput}>
                           <div className={styles.title}>Nama Aplikasi</div>
                           <input
+                            disabled
                             type="text"
                             className={styles.input}
                             value={item.name}
@@ -625,11 +653,20 @@ function EditProfile(props) {
                         <div className={styles.formInput}>
                           <div className={styles.title}>Link repository</div>
                           <input
+                            disabled
                             type="text"
                             className={styles.input}
                             value={item.repository}
                             placeholder="  Masukan link repository"
                           />
+                        </div>
+                        <div className={styles.formInput}>
+                          <div className={styles.title}>Type Portofolio</div>
+                          <div className={styles.input} style={{padding:"17px"}}>
+                            {item.type == 0
+                              ? "Aplikasi Mobile"
+                              : "Aplikasi Website"}
+                          </div>
                         </div>
                         <div className={styles.image}>
                           <Image
@@ -646,6 +683,12 @@ function EditProfile(props) {
                         <div className={styles.formInput}>
                           <button
                             className={styles.button5}
+                            style={{
+                              border: "1px solid red",
+                              color: "red",
+                              borderRadius: "10px",
+                              backgroundColor: "transparent",
+                            }}
                             onClick={() => handleDeletePortofolio(item.id)}
                           >
                             Hapus Portofolio

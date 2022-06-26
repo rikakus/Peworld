@@ -35,10 +35,29 @@ export async function getServerSideProps(context) {
       };
     }
   };
+  const GetLevel = async () => {
+    try {
+      const res = await axios({
+        method: "get",
+        url: `${process.env.HOST}/photo`,
+        headers: { token: token },
+      });
+      return {
+        data: res.data,
+        error: false,
+      };
+    } catch (error) {
+      return {
+        data: [],
+        error: true,
+      };
+    }
+  };
   return {
     props: {
       data: [],
       api1: await api1(),
+      level: await GetLevel(),
     },
   };
 }
@@ -46,8 +65,23 @@ export async function getServerSideProps(context) {
 function Profile(props) {
   const [activeTab, setActiveTab] = useState("1");
   const data1 = props.api1.data.data;
+  const level = props.level.data.data.level;
+  console.log(level);
 
   const host = process.env.HOST;
+
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
+
+  const height =
+    width > 550
+      ? 1300
+      : 1300 +
+        (activeTab == "1"
+          ? data1.portofolio.length * 180
+          : data1.experience.length * 300);
 
   return (
     <>
@@ -57,7 +91,7 @@ function Profile(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="hero" style={{ height: "200vh" }}>
+      <div className="hero" style={{ height: `${height}px` }}>
         <div className={styles.background}>
           <div className={styles.container}>
             <div className={styles.profile}>
@@ -86,7 +120,12 @@ function Profile(props) {
               )}
               <div className={styles.desc}>{data1.user.job_desk}</div>
               <div className={styles.desc}>{data1.user.description}</div>
-              <button className={styles.button}>Hire</button>
+              <button
+                className={styles.button}
+                hidden={level == 1 ? "hidden" : ""}
+              >
+                Hire
+              </button>
               <div className={styles.formSkill}>
                 <h1>Skill</h1>
                 <Row style={{ margin: "10px" }}>
@@ -134,21 +173,29 @@ function Profile(props) {
               )}
             </div>
             <div className={styles.content}>
-              <Nav tabs>
+              <Nav>
                 <NavItem>
                   <NavLink
-                    className={activeTab == "1" ? "active" : ""}
+                    className={styles.navTab}
                     onClick={() => setActiveTab("1")}
-                    style={{ marginLeft: "100px" }}
+                    style={
+                      activeTab == "1"
+                        ? { borderBottom: "4px solid #5e50a1" }
+                        : {}
+                    }
                   >
                     portofolio
                   </NavLink>
                 </NavItem>
                 <NavItem>
                   <NavLink
-                    className={activeTab == "2" ? "active" : ""}
+                    className={styles.navTab}
                     onClick={() => setActiveTab("2")}
-                    style={{ marginLeft: "100px" }}
+                    style={
+                      activeTab == "2"
+                        ? { borderBottom: "4px solid #5e50a1" }
+                        : {}
+                    }
                   >
                     pengalaman kerja
                   </NavLink>
@@ -163,7 +210,9 @@ function Profile(props) {
                           <Col className={styles.cardPorto} key={item.id}>
                             <div className={styles.porto}>
                               <Image
-                                src={`${host}/${item.photo ? item.photo : "profile.jpg"}`}
+                                src={`${host}/${
+                                  item.photo ? item.photo : "profile.jpg"
+                                }`}
                                 width={219}
                                 height={148}
                                 layout="fixed"
@@ -185,7 +234,9 @@ function Profile(props) {
                             <div className={styles.cardExp} key={item.id}>
                               <div className={styles.expImg}>
                                 <Image
-                                  src={`${host}/${item.photo ? item.photo : "profile.jpg"}`}
+                                  src={`${host}/${
+                                    item.photo ? item.photo : "profile.jpg"
+                                  }`}
                                   width={148}
                                   height={148}
                                   layout="fixed"

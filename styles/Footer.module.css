@@ -41,6 +41,9 @@
     margin-right: 40px;
 }
 @media screen and (max-width: 550px){
+    .container {
+    padding: 0 1rem;
+}
     .content{
         width: 100%;
     }

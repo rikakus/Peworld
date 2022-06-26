@@ -52,7 +52,7 @@
     background-position: center;
     margin-right: 30px;
 }
-@media screen and (max-width: 550px){
+/* @media screen and (max-width: 550px){
     .formButtton{
         flex-direction: column;
         justify-content: flex-end;
@@ -76,4 +76,4 @@
         margin-bottom: 20px;
         margin-right: 25px;
     }
-}
+} */
