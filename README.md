@@ -1,34 +1,139 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div id="top"></div>
 
+
+
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/rikakus/Peworld">
+    <img src="/public/peworldLogo.png" alt="Logo">
+  </a>
+
+<h3 align="center">PEWORLD</h3>
+</div>
+
+
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+![Landing Page](/public/peworld.png)
+Peworld is a worker hiring website developed with the NextJS framework where users are divided into 2, the first is the user as an employee and the second is the user as a recruiter. Both users can register, login, search, and edit their own profiles.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+### Built With
+
+* [Next.js](https://nextjs.org/)
+* [Bootstrap](https://getbootstrap.com)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<!-- GETTING STARTED -->
 ## Getting Started
 
-First, run the development server:
+This is an example of how you may install my Project.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Installation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Get the API from my github at [https://github.com/rikakus/Peworld-API](https://github.com/rikakus/Peworld-API)
+2. Clone the repo
+   ```sh
+   git clone https://github.com/rikakus/Peworld
+   ```
+3. Install NPM packages
+   ```sh
+   npm install
+   ```
+4. Enter your API in `.env`
+   ```js
+   HOST= where you run the API
+   ```
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<!-- USAGE EXAMPLES -->
+## Usage
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+### Landing Page
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Landing Page](/public/peworld.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Login
 
-## Deploy on Vercel
+![Login](/public/peworldLogin.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Register Worker
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![Register](/public/registerWorker.png)
+
+### Register Recruiter
+
+![Register](/public/registerRecruiter.png)
+
+### Profile Worker
+
+![Recipe](/public/peworldProfile.png)
+
+### Edit Profile
+
+![Recipe](/public/peworldEdit.png)
+
+### Search
+
+![Search](/public/peworldSearch.png)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Ian Pangestu - [@ianpangestu082](https://twitter.com/ianpangestu082) - ianpangestu082@gmail.com
+
+Project Link: [https://github.com/rikakus/Peworld](https://github.com/rikakus/Peworld)
+
+Link API:  [https://github.com/rikakus/Peworld-API](https://github.com/rikakus/Peworld-API)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
