@@ -131,7 +131,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Ian Pangestu - [@ianpangestu082](https://twitter.com/ianpangestu082) - ianpangestu082@gmail.com
 
-Project Link: [https://github.com/rikakus/Peworld](https://github.com/rikakus/Peworld)
+Project Link: [https://peworld-rikakus.vercel.app/](https://peworld-rikakus.vercel.app/)
 
 Link API:  [https://github.com/rikakus/Peworld-API](https://github.com/rikakus/Peworld-API)
 
